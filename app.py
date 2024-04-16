@@ -1,22 +1,22 @@
-import csv
+from flask import Flask, render_template, request
 import numpy as np
 import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+import csv
 
+app = Flask(__name__)
 
-# Loads preprocessed data and results from CSV (includes CO2 emissions in metric tons per person,
-# the ratio of renewable to non-renewable energy generated, planar equation coefficients,
-# and R squared for each country from 2000-2021)
+# Loads preprocessed data and results from CSV
 def load_data(filename_in):
     data = dict()
     rows = []
-    # Get data from CSV
     with open(filename_in, mode='r') as csvfile:
         csv_reader = csv.reader(csvfile)
         next(csv_reader)
         for row in csv_reader:
             rows.append(row)
 
-    # Load data into dictionary based on country code
     for i in range(len(rows)):
         name = rows[i][0]
         code = rows[i][1]
@@ -44,19 +44,13 @@ def load_data(filename_in):
 
     return data
 
-
-# Displays 3-dimensional plot of data points and corresponding planar model for a given country code
-# (to avoid spaces in command line arguments)
-# Additionally calculates and displays predicted CO2 emission prediction for a given year
-# and energy generation ratio if mode is set to 'predict'
-def display(mode, filename_in, code, x1=None, x2=None):
-    data = load_data(filename_in)
+# Display function for plotting
+def display(code, x1=None, x2=None):
+    data = load_data("results.csv")
 
     if code not in data.keys():
-        print("ERROR: Country not found")
-        exit(-1)
+        return "ERROR: Country not found"
 
-    # Initialize plot variables
     code_data = data[code]
     min_year = 2000
     max_year = 2021
@@ -65,25 +59,22 @@ def display(mode, filename_in, code, x1=None, x2=None):
     A, B, C = code_data["A"], code_data["B"], code_data["C"]
     prediction = 0.0
 
-    print(f"Country: {code}\n\tEquation: {code_data['Equation']}\n\tR_sq: {code_data['R_sq']}")
-
-    # Calculate prediction and recalculate plot boundaries
-    if mode == "predict":
+    if x1 is not None and x2 is not None:
         x1 = int(x1)
         x2 = float(x2)
         min_year, max_year, min_energy, max_energy = (min(min_year, x1), max(max_year, x1),
                                                       min(min_energy, x2), max(max_energy, x2))
         prediction = A * x1 + B * x2 + C
-        print(f"Prediction for {x1} with an energy generation ratio of {x2}: {prediction}")
+        prediction_text = f"Prediction for {x1} with an energy generation ratio of {x2}: {prediction}"
+    else:
+        prediction_text = ""
 
-    # Initialize plot variables
     X1, X2 = np.meshgrid(np.linspace(min_year, max_year, 100), np.linspace(min_energy, max_energy, 100))
     Y = A * X1 + B * X2 + C
     points_X1 = np.array(code_data["Years"])
     points_X2 = np.array(code_data["Renewable vs Non-Renewable Energy Generation"])
     points_Y = np.array(code_data["CO2 Emissions Per Capita"])
 
-    # Create plot
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.plot_surface(X1, X2, Y)
@@ -92,14 +83,32 @@ def display(mode, filename_in, code, x1=None, x2=None):
     ax.set_xlabel("Year")
     ax.set_ylabel("Energy Generation Ratio (r vs non-r)")
     ax.set_zlabel("CO2 Emissions (metric tons / person)")
-    text = f"Equation: {code_data['Equation']}, R^2: {code_data['R_sq']}"
+    text = f"Equation: {code_data['Equation']}, R^2: {code_data['R_sq']}\n{prediction_text}"
     plt.figtext(0.5, 0.01, text, wrap=True, horizontalalignment='center', fontsize=12)
 
-    # Add prediction to plot
-    if mode == "predict":
+    if x1 is not None and x2 is not None:
         pred_point = np.array([x1, x2, prediction])
         ax.scatter(pred_point[0], pred_point[1], pred_point[2], color='red')
 
-    plt.show()
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plot_data = base64.b64encode(buffer.read()).decode('utf-8')
+    plt.close()
 
-display("predict", "results.csv", "USA", 2022, 0.5)  # Prediction for 2022 with an energy generation ratio of 0.5: 16.0
+    return plot_data
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/plot', methods=['POST'])
+def plot():
+    code = request.form['code']
+    x1 = request.form['x1']
+    x2 = request.form['x2']
+    plot_data = display(code, x1, x2)
+    return render_template('plot.html', plot_data=plot_data)
+
+if __name__ == '__main__':
+    app.run(debug=True)
