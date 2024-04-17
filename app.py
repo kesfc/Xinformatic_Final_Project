@@ -112,5 +112,9 @@ def plot():
     plot_data = display(code, x1, x2)
     return render_template('plot.html', plot_data=plot_data)
 
+@app.route('/results.html')
+def results():
+    return render_template('results.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
