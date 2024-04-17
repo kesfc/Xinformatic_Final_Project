@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import numpy as np
+import matplotlib
+matplotlib.use('agg')  # Use the 'agg' backend (non-interactive)
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
@@ -94,7 +96,7 @@ def display(code, x1=None, x2=None):
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     plot_data = base64.b64encode(buffer.read()).decode('utf-8')
-    plt.close()
+    plt.close(fig)  # Close the figure to avoid resource leaks
 
     return plot_data
 

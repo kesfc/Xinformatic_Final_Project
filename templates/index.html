@@ -3,11 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Country Code</title>
 </head>
 <body>
+    <h1>Xinformatic Final Project Title</h1>
+    <h2>Abstract</h2>
+    <p>This is the abstract of the project.</p>
+    <h2>Introduction</h2>
+    <p>This is the introduction of the project.</p>
+    <h2>Methodology</h2>
+    <p>This is the methodology of the project.</p>
+    <h2>Results</h2>
+    <p>This is the results of the project.</p>
+    <h2>Conclusion</h2>
+    <p>This is the conclusion of the project.</p>
+    <h2>References</h2>
+    <p>This is the references of the project.</p>
+    <script>
+        function validateForm() {
+            var x1 = document.getElementById("x1").value;
+            var x2 = document.getElementById("x2").value;
+
+            // Validate x1 (Year to Predict)
+            if (isNaN(x1) || parseInt(x1) <= 2020) {
+                alert("Year to Predict must be a number greater than 2020.");
+                return false;
+            }
+
+            // Validate x2 (Ratio of renewable vs non-renewable energy generation)
+            if (isNaN(x2) || parseFloat(x2) < 0 || parseFloat(x2) > 1) {
+                alert("Ratio of renewable vs non-renewable energy generation must be a float between 0 and 1.");
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+    </script>
     <h2>Enter Country Code and Values</h2>
-    <form action="/plot" method="post">
+    <form action="/plot" method="post" onsubmit="return validateForm()">
         <label for="code">Country:</label>
         <select id="code" name="code" required>
             <option value="WLD">World</option>
@@ -405,9 +437,9 @@
             <option value="ZWE">Zimbabwe</option>
             <option value="ZWE">Zimbabwe</option>
         </select><br><br>
-        <label for="x1">Value for x1:</label>
+        <label for="x1">Year to Predict:</label>
         <input type="number" id="x1" name="x1" required><br><br>
-        <label for="x2">Value for x2:</label>
+        <label for="x2">Ratio of renewable vs non-renewable energy generation:</label>
         <input type="number" id="x2" name="x2" required><br><br>
         <button type="submit">Plot</button>
     </form>

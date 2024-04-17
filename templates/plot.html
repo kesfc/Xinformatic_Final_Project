@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graph</title>
+    <title>Generated Graph</title>
 </head>
 <body>
     <h2>Generated Graph</h2>
-    <img src="data:image/png;base64,{{ plot_data }}" alt="Graph">
+    <img src="data:image/png;base64,{{ plot_data }}" alt="Graph"><br><br>
+    <!-- Button to return to index.html -->
+    <a href="{{ url_for('index') }}"><button>Return to Input</button></a>
 </body>
 </html>
