@@ -18,6 +18,7 @@ def print_as_HTML(filename_in):
 
     # Load data into dictionary based on country code
     for i in range(len(rows)):
-        print("<option value=\"{}\">{}</option>".format(rows[i][1], rows[i][0]))
+        if(i%2==0):
+            print("<option value=\"{}\">{}</option>".format(rows[i][1], rows[i][0]))
 
 print_as_HTML("results.csv")
