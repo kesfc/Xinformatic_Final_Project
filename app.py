@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 import csv
+from bokeh.embed import components
+from bokeh.plotting import figure
 
 app = Flask(__name__)
 
@@ -43,7 +45,7 @@ def load_data(filename_in):
             loc["R_sq"] = r_sq
             loc["Years"] = [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
                             2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
-
+    print(data)
     return data
 
 # Display function for plotting
