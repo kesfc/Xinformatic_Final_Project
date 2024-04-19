@@ -9,7 +9,7 @@ from display import load_data
 # Additionally calculates and displays predicted CO2 emission prediction for a given year
 # and energy generation ratio if mode is set to 'predict'
 def planar_model_3d(code, x1=None, x2=None):
-    data = load_data("results.csv")
+    data = load_data("data/results.csv")
 
     if code not in data.keys():
         return "ERROR: Country not found"
@@ -66,4 +66,4 @@ def planar_model_3d(code, x1=None, x2=None):
 
     return plot_data
 
-# 
+planar_model_3d("USA", 2030, 0.5)
