@@ -102,4 +102,5 @@ def display(mode, filename_in, code, x1=None, x2=None):
 
     plt.show()
 
-display("predict", "results.csv", "USA", 2022, 0.5)  # Prediction for 2022 with an energy generation ratio of 0.5: 16.0
+if __name__=="__main__":
+    display("predict", "results.csv", "USA", 2022, 0.5)  # Prediction for 2022 with an energy generation ratio of 0.5: 16.0
