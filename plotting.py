@@ -12,6 +12,7 @@ from bokeh.plotting import figure
 # and energy generation ratio if mode is set to 'predict'
 def planar_model_3d(code, x1=None, x2=None):
     data = load_data("data/results.csv")
+    data = load_data("data/results.csv")
 
     if code not in data.keys():
         return "ERROR: Country not found"
