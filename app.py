@@ -22,7 +22,8 @@ def plot():
     x1 = request.form['x1']
     x2 = request.form['x2']
     plot_data1 = planar_model_3d(code, x1, x2)
-    return render_template('plot.html', plot_data1=plot_data1)
+    plot_data2 = prediction_plot(code, x1, x2)
+    return render_template('plot.html', plot_data1=plot_data1, plot_data2=plot_data2)
 
 @app.route('/results.html')
 def results():

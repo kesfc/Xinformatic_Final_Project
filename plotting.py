@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 from display import load_data
-from bokeh.embed import components
-from bokeh.plotting import figure
 
 # Displays 3-dimensional plot of data points and corresponding planar model for a given country code
 # (to avoid spaces in command line arguments)
@@ -12,12 +10,11 @@ from bokeh.plotting import figure
 # and energy generation ratio if mode is set to 'predict'
 def planar_model_3d(code, x1=None, x2=None):
     data = load_data("data/results.csv")
-    data = load_data("data/results.csv")
 
     if code not in data.keys():
         return "ERROR: Country not found"
 
-    # Initialize plot variables
+    # Initialize axis limits
     code_data = data[code]
     min_year = 2000
     max_year = 2021
@@ -73,41 +70,53 @@ def planar_model_3d(code, x1=None, x2=None):
 def prediction_plot(code, x1=None, x2=None):
     data = load_data("data/results.csv")
 
-    # Initialize plot variables
+    # Initialize axis limits
     code_data = data[code]
     min_year = 2000
     max_year = 2021
     min_energy = min(code_data["Renewable vs Non-Renewable Energy Generation"])
     max_energy = max(code_data["Renewable vs Non-Renewable Energy Generation"])
+    numrows = max_energy - min_energy
+    if x1 is not None:
+        x1 = int(x1)
+        x2 = float(x2) 
+        numcols = x1 - min_year 
+    else: 
+        numcols = max_year - min_year
     A, B, C = code_data["A"], code_data["B"], code_data["C"]
     prediction = 0.0
 
-    # create the plot figure
-    p = figure(height=350, sizing_mode="stretch_width")
-    p.circle(
-        code_data["Years"],
-        code_data["CO2 Emissions Per Capita"],
-        size=20,
-        color="navy",
-        alpha=0.5
-    )
-    script, div = components(p)
+    # initialize data
+    years_series = np.array(code_data["Years"])
+    renewable_ratio_series = np.array(code_data["Renewable vs Non-Renewable Energy Generation"])
+    emissions_series = np.array(code_data["CO2 Emissions Per Capita"])
 
-    # return chart components
-    return f'''
-    <html lang="en">
-        <head>
-            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.0.1.min.js"></script>
-            <title>Bokeh Charts</title>
-        </head>
-        <body>
-            <h1>Add Graphs to Flask apps using Python library - Bokeh</h1>
-            { div }
-            { script }
-        </body>
-    </html>
-    '''
+    # create figure
+    plt.figure()
+    plt.scatter(years_series, emissions_series, color='blue')
+    plt.title(f"Carbon Emissions vs Time for { code } with { x2 } Renewable Ratio")
+    plt.xlabel("Time (Years)")
+    plt.ylabel("Carbon Emissions (Million metric tons of CO2)")
+
+    if x1 is not None and x2 is not None:
+        x1 = int(x1)
+        x2 = float(x2)
+        min_year, max_year, min_energy, max_energy = (min(min_year, x1), max(max_year, x1),
+                                                      min(min_energy, x2), max(max_energy, x2))
+        prediction = A * x1 + B * x2 + C
+        # Add prediction point onto plot
+        plt.scatter(x1, prediction, color='red')
+
+
+    # Generate png image of plot
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    plot_data = base64.b64encode(buffer.read()).decode('utf-8')
+    plt.close()  # Close the figure to avoid resource leaks
+
+    return plot_data
 
 if __name__=="__main__":
-    script, div = prediction_plot("AFG", x1="2025", x2="0.75")
+    prediction_plot('WLD', 2024, 0.2)
     
