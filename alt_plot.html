@@ -1,0 +1,47 @@
+
+    <html lang="en">
+        <head>
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.0.1.min.js"></script>
+            <title>Bokeh Charts</title>
+        </head>
+        <body>
+            <h1>Add Graphs to Flask apps using Python library - Bokeh</h1>
+            <div id="bb358b68-20c7-4406-9914-dc2162ed8f85" data-root-id="p1083" style="display: contents;"></div>
+                <script type="text/javascript">
+        (function() {
+  const fn = function() {
+    Bokeh.safely(function() {
+      (function(root) {
+        function embed_document(root) {
+        const docs_json = '{"c438b98c-7df4-4198-90fa-bf679e9ef152":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Figure","id":"p1083","attributes":{"height":350,"sizing_mode":"stretch_width","x_range":{"type":"object","name":"DataRange1d","id":"p1084"},"y_range":{"type":"object","name":"DataRange1d","id":"p1085"},"x_scale":{"type":"object","name":"LinearScale","id":"p1092"},"y_scale":{"type":"object","name":"LinearScale","id":"p1093"},"title":{"type":"object","name":"Title","id":"p1090"},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p1121","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1115","attributes":{"selected":{"type":"object","name":"Selection","id":"p1116","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1117"},"data":{"type":"map","entries":[["x",[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021]],["y",[13.108818290494256,13.071031640147524,13.259467312927699,13.582641730666472,14.115055218420258,14.424250369664387,14.756433401785944,15.04639427442923,14.92716979511312,14.584349374189532,15.172758568605204,15.340790232157755,15.36211256253801,15.467163860442504,15.454925687068117,15.27867919000596,15.110401269062107,15.220449498490789,15.440100801782211,15.279819176398,14.172062340151854,14.877242426058068]]]}}},"view":{"type":"object","name":"CDSView","id":"p1122","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1123"}}},"glyph":{"type":"object","name":"Scatter","id":"p1118","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":20},"line_color":{"type":"value","value":"navy"},"line_alpha":{"type":"value","value":0.5},"fill_color":{"type":"value","value":"navy"},"fill_alpha":{"type":"value","value":0.5},"hatch_color":{"type":"value","value":"navy"},"hatch_alpha":{"type":"value","value":0.5}}},"nonselection_glyph":{"type":"object","name":"Scatter","id":"p1119","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":20},"line_color":{"type":"value","value":"navy"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"navy"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"navy"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Scatter","id":"p1120","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":20},"line_color":{"type":"value","value":"navy"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"navy"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"navy"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1091","attributes":{"tools":[{"type":"object","name":"PanTool","id":"p1104"},{"type":"object","name":"WheelZoomTool","id":"p1105","attributes":{"renderers":"auto"}},{"type":"object","name":"BoxZoomTool","id":"p1106","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1107","attributes":{"syncable":false,"level":"overlay","visible":false,"left":{"type":"number","value":"nan"},"right":{"type":"number","value":"nan"},"top":{"type":"number","value":"nan"},"bottom":{"type":"number","value":"nan"},"left_units":"canvas","right_units":"canvas","top_units":"canvas","bottom_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"SaveTool","id":"p1112"},{"type":"object","name":"ResetTool","id":"p1113"},{"type":"object","name":"HelpTool","id":"p1114"}]}},"left":[{"type":"object","name":"LinearAxis","id":"p1099","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1100","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1101"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1102"}}}],"below":[{"type":"object","name":"LinearAxis","id":"p1094","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1095","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1096"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1097"}}}],"center":[{"type":"object","name":"Grid","id":"p1098","attributes":{"axis":{"id":"p1094"}}},{"type":"object","name":"Grid","id":"p1103","attributes":{"dimension":1,"axis":{"id":"p1099"}}}]}}]}}';
+        const render_items = [{"docid":"c438b98c-7df4-4198-90fa-bf679e9ef152","roots":{"p1083":"bb358b68-20c7-4406-9914-dc2162ed8f85"},"root_ids":["p1083"]}];
+        root.Bokeh.embed.embed_items(docs_json, render_items);
+        }
+        if (root.Bokeh !== undefined) {
+          embed_document(root);
+        } else {
+          let attempts = 0;
+          const timer = setInterval(function(root) {
+            if (root.Bokeh !== undefined) {
+              clearInterval(timer);
+              embed_document(root);
+            } else {
+              attempts++;
+              if (attempts > 100) {
+                clearInterval(timer);
+                console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+              }
+            }
+          }, 10, root)
+        }
+      })(window);
+    });
+  };
+  if (document.readyState != "loading") fn();
+  else document.addEventListener("DOMContentLoaded", fn);
+})();
+    </script>
+
+        </body>
+    </html>
+    
