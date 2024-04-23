@@ -47,10 +47,8 @@ def planar_model_3d(code, x1=None, x2=None):
     ax.scatter(points_X1, points_X2, points_Y, color='blue')
     ax.set_title(f"Multiple Regression Model for {code}")
     ax.set_xlabel("Year")
-    ax.set_ylabel("Energy Generation Ratio (r vs non-r)")
-    ax.set_zlabel("CO2 Emissions (metric tons / person)")
-    text = f"Equation: {code_data['Equation']}, R^2: {code_data['R_sq']}\n{prediction_text}"
-    plt.figtext(0.5, 0.01, text, wrap=True, horizontalalignment='center', fontsize=12)
+    ax.set_ylabel("Energy Generation Ratio\n(renewable vs non-renewable)")
+    ax.set_zlabel("CO2 Emissions\n(metric tons / person)",)
 
     # Add prediction point onto plot
     if x1 is not None and x2 is not None:
