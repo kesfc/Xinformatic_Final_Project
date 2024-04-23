@@ -32,8 +32,8 @@
             }
 
             // Validate x2 (Ratio of renewable vs non-renewable energy generation)
-            if (isNaN(x2) || parseFloat(x2) < 0 || parseFloat(x2) > 1) {
-                alert("Ratio of renewable vs non-renewable energy generation must be a float between 0 and 1.");
+            if (isNaN(x2) || parseFloat(x2) < 0) {
+                alert("Ratio of renewable vs non-renewable energy generation must be a float higher than 0.");
                 return false;
             }
 
