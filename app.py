@@ -2,13 +2,6 @@ from flask import Flask, render_template, request
 import matplotlib
 matplotlib.use('agg')  # Use the 'agg' backend (non-interactive)
 from plotting import prediction_plot, planar_model_3d
-from display import load_data
-import csv
-import numpy as np
-import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
-
 
 app = Flask(__name__)
 
